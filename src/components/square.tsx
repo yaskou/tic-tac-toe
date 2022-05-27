@@ -1,4 +1,5 @@
 import React from "react";
+import SquareStyle from "./style/squareStyle";
 
 type Props = {
   value: string | null,
@@ -7,9 +8,9 @@ type Props = {
 
 const Square = ({ value, onClick }: Props) => {
   return (
-    <button onClick={onClick}>
+    <SquareStyle onClick={onClick}>
       {value}
-    </button>
+    </SquareStyle>
   );
 }
 
