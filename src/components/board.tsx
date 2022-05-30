@@ -3,9 +3,10 @@ import Square from "./square";
 import useSquares from "./hooks/useSquares";
 import Container from "./style/container";
 import { Range } from "./tools";
+import Message from "./style/message";
 
 const Board = () => {
-  const [squares, { handleClick }] = useSquares();
+  const [squares, { handleClick, message }] = useSquares();
   const renderSquare = (i: number) => {
     return (
       <Square
@@ -16,9 +17,14 @@ const Board = () => {
     );
   }
   return (
-    <Container>
-      {Range(9).map(i => renderSquare(i))}
-    </Container>
+    <>
+      <Container>
+        {Range(9).map(i => renderSquare(i))}
+      </Container>
+      <Message>
+        {message()}
+      </Message>
+    </>
   );
 }
 
