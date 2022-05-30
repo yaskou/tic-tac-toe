@@ -2,6 +2,7 @@ import React from "react";
 import Square from "./square";
 import useSquares from "./hooks/useSquares";
 import Container from "./style/container";
+import { Range } from "./tools";
 
 const Board = () => {
   const [squares, { handleClick }] = useSquares();
@@ -16,7 +17,7 @@ const Board = () => {
   }
   return (
     <Container>
-      {[0, 1, 2, 3, 4, 5, 6, 7, 8].map(i => renderSquare(i))}
+      {Range(9).map(i => renderSquare(i))}
     </Container>
   );
 }
