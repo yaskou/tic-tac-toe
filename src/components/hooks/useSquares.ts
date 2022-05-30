@@ -23,6 +23,14 @@ const useSquares = () => {
     }
     return null;
   }
+  const message = () => {
+    const winner = calculateWinner(squares);
+    return (
+      winner === "X" ? "おっとあなたは勝ってしまいました" :
+        winner === "O" ? "あなたに勝ってしまいました" :
+          "まだ決着はついていません" as string
+    );
+  }
   const handleClick = (i: number) => {
     const newSquares = squares.slice();
     if (calculateWinner(newSquares) || newSquares[i]) {
@@ -34,7 +42,7 @@ const useSquares = () => {
   }
   // eslint-disable-next-line
   useEffect(() => { !xIsNext && handleClick(lose(squares, lines, calculateWinner) as number); }, [xIsNext]);
-  return [squares, { handleClick, calculateWinner }] as const;
+  return [squares, { handleClick, message }] as const;
 }
 
 export default useSquares;
