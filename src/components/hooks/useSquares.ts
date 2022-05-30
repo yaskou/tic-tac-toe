@@ -14,7 +14,7 @@ const useSquares = () => {
     [0, 4, 8],
     [2, 4, 6],
   ];
-  const calculateWinner = (squares: string[] | null[], lines: number[][]) => {
+  const calculateWinner = (squares: string[] | null[]) => {
     for (let line of lines) {
       const [a, b, c] = line;
       if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
@@ -25,7 +25,7 @@ const useSquares = () => {
   }
   const handleClick = (i: number) => {
     const newSquares = squares.slice();
-    if (calculateWinner(newSquares, lines) || newSquares[i]) {
+    if (calculateWinner(newSquares) || newSquares[i]) {
       return;
     }
     newSquares[i] = xIsNext ? "X" : "O";
@@ -34,7 +34,7 @@ const useSquares = () => {
   }
   // eslint-disable-next-line
   useEffect(() => { !xIsNext && handleClick(lose(squares, lines, calculateWinner) as number); }, [xIsNext]);
-  return [squares, { handleClick }] as const;
+  return [squares, { handleClick, calculateWinner }] as const;
 }
 
 export default useSquares;
