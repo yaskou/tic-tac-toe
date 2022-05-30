@@ -3,7 +3,7 @@ import { getRandomArbitrary, Min, Range } from "../tools";
 const lose = (
   squares: string[] | null[],
   lines: number[][],
-  calculateWinner: (squares: string[] | null[], lines: number[][]) => string | null
+  calculateWinner: (squares: string[] | null[]) => string | null
 ) => {
   if (![...squares].includes(null)) {
     return;
@@ -17,11 +17,13 @@ const lose = (
     return lineCopy;
   });
   const getCanSetCount = Range(9).map(n => canSet.filter(o => o === n).length);
-  const mustSet = getCanSetCount.map((v, i) => {
+  const maySet = getCanSetCount.map((v, i) => v === Min(getCanSetCount.filter(i => i > 0)) && i).filter(i => i !== false) as number[];
+  const mustSet = maySet.filter(i => {
     const maybe = squares.slice();
-    return v === Min(getCanSetCount.filter(i => i > 0)) && (maybe[i] = "O", !calculateWinner(maybe, lines)) && i;
-  }).filter(i => i !== false);
-  return mustSet[getRandomArbitrary(0, mustSet.length - 1)];
+    maybe[i] = "O";
+    return !calculateWinner(maybe);
+  });
+  return mustSet.length ? mustSet[getRandomArbitrary(0, mustSet.length - 1)] : maySet[getRandomArbitrary(0, maySet.length - 1)];
 }
 
 export default lose;
