@@ -21,7 +21,6 @@ const lose = (
     const maybe = squares.slice();
     return v === Min(getCanSetCount.filter(i => i > 0)) && (maybe[i] = "O", !calculateWinner(maybe, lines)) && i;
   }).filter(i => i !== false);
-  console.log(mustSet);
   return mustSet[getRandomArbitrary(0, mustSet.length - 1)];
 }
 
