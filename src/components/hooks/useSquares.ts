@@ -31,6 +31,10 @@ const useSquares = () => {
           "まだ決着はついていません" as string
     );
   }
+  const Clear = () => {
+    setSquares(Array(9).fill(null));
+    setXIsNext(true);
+  }
   const handleClick = (i: number) => {
     const newSquares = squares.slice();
     if (calculateWinner(newSquares) || newSquares[i]) {
@@ -42,7 +46,7 @@ const useSquares = () => {
   }
   // eslint-disable-next-line
   useEffect(() => { !xIsNext && handleClick(lose(squares, lines, calculateWinner) as number); }, [xIsNext]);
-  return [squares, { handleClick, message }] as const;
+  return [squares, { Clear, handleClick, message }] as const;
 }
 
 export default useSquares;
