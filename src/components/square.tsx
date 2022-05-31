@@ -1,5 +1,4 @@
 import React from "react";
-import SquareStyle from "./style/squareStyle";
 
 type Props = {
   value: string | null,
@@ -8,9 +7,12 @@ type Props = {
 
 const Square = ({ value, onClick }: Props) => {
   return (
-    <SquareStyle onClick={onClick}>
+    <div
+      onClick={onClick}
+      className="d-flex justify-content-center align-items-center border border-primary fs-3"
+    >
       {value}
-    </SquareStyle>
+    </div>
   );
 }
 
