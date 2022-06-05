@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import bot from "../../bot";
+import bot from "../bot";
 
 const useSquares = () => {
   const [squares, setSquares] = useState<(string | null)[]>(Array(9).fill(null));
