@@ -48,11 +48,11 @@ const useSquares = () => {
       return "まだ決着はついていません";
     }
   }
-  // eslint-disable-next-line
   useEffect(() => {
     if (!xIsNext) {
       handleClick(bot(squares, lines, calculateWinner) as number);
     }
+    // eslint-disable-next-line
   }, [xIsNext]);
   return [squares, { clear, handleClick, result }] as const;
 }
