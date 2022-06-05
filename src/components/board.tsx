@@ -3,10 +3,13 @@ import React from "react";
 import Square from "./square";
 import { Range } from "../tools";
 import grid from "./style/grid";
-import useSquares from "./hooks/useSquares";
 
-const Board = () => {
-  const [squares, { handleClick }] = useSquares();
+interface Props {
+  squares: (string | null)[],
+  handleClick: (i: number) => void
+}
+
+const Board = ({ squares, handleClick }: Props) => {
   return (
     <div
       className="d-grid border border-success mx-auto"
