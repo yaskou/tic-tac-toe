@@ -23,7 +23,7 @@ const useSquares = () => {
     }
     return null;
   }
-  const Clear = () => {
+  const clear = () => {
     setSquares(Array(9).fill(null));
     setXIsNext(true);
   }
@@ -50,9 +50,11 @@ const useSquares = () => {
   }
   // eslint-disable-next-line
   useEffect(() => {
-    !xIsNext && handleClick(bot(squares, lines, calculateWinner) as number);
+    if (!xIsNext) {
+      handleClick(bot(squares, lines, calculateWinner) as number);
+    }
   }, [xIsNext]);
-  return [squares, { Clear, handleClick, result }] as const;
+  return [squares, { clear, handleClick, result }] as const;
 }
 
 export default useSquares;
