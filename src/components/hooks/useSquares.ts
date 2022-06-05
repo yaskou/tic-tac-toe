@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import lose from "../bot/lose";
+import bot from "../../bot";
 
 const useSquares = () => {
-  const [squares, setSquares] = useState<string[] | null[]>(Array(9).fill(null));
+  const [squares, setSquares] = useState<(string | null)[]>(Array(9).fill(null));
   const [xIsNext, setXIsNext] = useState<boolean>(true);
   const lines = [
     [0, 1, 2],
@@ -14,7 +14,7 @@ const useSquares = () => {
     [0, 4, 8],
     [2, 4, 6],
   ];
-  const calculateWinner = (squares: string[] | null[]) => {
+  const calculateWinner = (squares: (string | null)[]) => {
     for (let line of lines) {
       const [a, b, c] = line;
       if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
@@ -23,20 +23,12 @@ const useSquares = () => {
     }
     return null;
   }
-  const message = () => {
-    const winner = calculateWinner(squares);
-    return (
-      winner === "X" ? "おっとあなたは勝ってしまいました" :
-        winner === "O" ? "あなたに勝ってしまいました" :
-          "まだ決着はついていません" as string
-    );
-  }
   const Clear = () => {
     setSquares(Array(9).fill(null));
     setXIsNext(true);
   }
   const handleClick = (i: number) => {
-    const newSquares = squares.slice();
+    const newSquares = [...squares];
     if (calculateWinner(newSquares) || newSquares[i]) {
       return;
     }
@@ -44,9 +36,23 @@ const useSquares = () => {
     setSquares(newSquares);
     setXIsNext(!xIsNext);
   }
+  const result = (): string => {
+    const winner = calculateWinner(squares);
+    if (winner === "X") {
+      return "おっと、あなたは勝ってしまいました";
+    }
+    else if (winner === "O") {
+      return "あなたに勝ってしまいました";
+    }
+    else {
+      return "まだ決着はついていません";
+    }
+  }
   // eslint-disable-next-line
-  useEffect(() => { !xIsNext && handleClick(lose(squares, lines, calculateWinner) as number); }, [xIsNext]);
-  return [squares, { Clear, handleClick, message }] as const;
+  useEffect(() => {
+    !xIsNext && handleClick(bot(squares, lines, calculateWinner) as number);
+  }, [xIsNext]);
+  return [squares, { Clear, handleClick, result }] as const;
 }
 
 export default useSquares;
