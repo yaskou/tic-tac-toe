@@ -2,8 +2,9 @@ import { getRandomArbitrary, Min, Range } from "./tools";
 
 const bot = (
   squares: (string | null)[], // 現在の碁盤の状態
-  lines: number[][], // 勝ちになるパターン
-  calculateWinner: (squares: (string | null)[]) => string | null // 勝ちかどうかを判定する
+  lines: number[][],// 勝ちになるパターン
+  side: number, // 1辺の長さ
+  calculateWinner: (squares: (string | null)[], lines: number[][]) => string | null // 勝ちかどうかを判定する
 ) => {
 
   // もしマス目がすべて埋まっているなら、なにもしない
@@ -39,7 +40,7 @@ const bot = (
   });
 
   // 合わなかった数字を集計する
-  const getAlreadySetCount = Range(9).map(n => {
+  const getAlreadySetCount = Range(side ** 2).map(n => { // 配列の長さ分、空の配列を作る
     // 合わなかった数字と現在のインデックスが合うものを抽出
     return getAlreadySet.filter(o => {
       return o === n;
@@ -69,7 +70,7 @@ const bot = (
   const shouldSet = maySet.filter(i => {
     const squaresCopy = [...squares]; // 碁盤のコピーを作成する
     squaresCopy[i] = "O";
-    return !calculateWinner(squares);
+    return !calculateWinner(squares, lines);
   });
 
   // もし置くべきマスがあるなら、ランダムで置くべきマスをランダムで選ぶ
